@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>BMS</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+
+
+		<!-- Top HEADER layout -->
+		<p:layoutUnit position="north" size="50" header="Header"
+			resizable="false" closable="true" collapsible="false">
+		</p:layoutUnit>
+
+		<!-- Bottom FOOTER layout -->
+		<p:layoutUnit position="south" size="50" header="Bottom"
+			resizable="true" closable="true" collapsible="false">
+		</p:layoutUnit>
+
+		<!--  <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
+                <h:form>
+                    <ui:include src="/templates/themeMenu.xhtml" />
+                </h:form>
+            </p:layoutUnit>-->
+
+		<p:layoutUnit position="center">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
+
+<!--  EFFECTS: blind, bounce, clip, drop, explode, fade, fold, highlight, puff, pulsate, scale, shake, size, slide, transfer. -->

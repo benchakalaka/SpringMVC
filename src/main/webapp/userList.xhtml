@@ -1,0 +1,214 @@
+<ui:composition template="/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:dataTable id="tbl" var="user" value="#{usersBean.users}"
+				selectionMode="single" selection="#{usersBean.selectedUser}"
+				rowKey="#{user.id}" paginatorPosition="top"
+				rowsPerPageTemplate="5,10,15"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<f:facet name="header">
+					<p:commandButton id="addUser" style="float:left;"
+						icon="ui-icon-circle-plus" onclick="PF('dialogAddUser').show()"></p:commandButton>
+
+
+
+				</f:facet>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Phone Number" />
+					</f:facet>
+					<h:outputText value="#{user.phoneNumber}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Email" />
+					</f:facet>
+					<h:outputText value="#{user.email}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputText value="#{user.name}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Surname" />
+					</f:facet>
+					<h:outputText value="#{user.surname}" />
+				</p:column>
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Login" />
+					</f:facet>
+					<h:outputText value="#{user.login}" />
+				</p:column>
+
+				<f:facet name="footer">  
+            	In total there are #{usersBean.users.size()} users. 
+            	
+            	<h:commandLink style="float:right;">
+						<p:graphicImage value="resources/theme/images/xls.png"
+							style="width:30px; height:30px;" />
+						<p:dataExporter type="xls" target="tbl" fileName="users" />
+					</h:commandLink>
+
+					<h:commandLink style="float:right;">
+						<p:graphicImage value="resources/theme/images/pdf.png"
+							style="width:30px; height:30px;" />
+						<p:dataExporter type="pdf" target="tbl" fileName="users" />
+					</h:commandLink>
+
+					<h:commandLink style="float:right;">
+						<p:graphicImage value="resources/theme/images/csv.png"
+							style="width:30px; height:30px;" />
+						<p:dataExporter type="csv" target="tbl" fileName="users" />
+					</h:commandLink>
+
+					<h:commandLink style="float:right;">
+						<p:graphicImage value="resources/theme/images/xml.png"
+							style="width:30px; height:30px;" />
+						<p:dataExporter type="xml" target="tbl" fileName="users" />
+					</h:commandLink>
+
+				</f:facet>
+			</p:dataTable>
+
+
+			<!-- ADD USER DIALOG -->
+			<p:dialog showEffect="fade" widgetVar="dialogAddUser"
+				header="Add new user">
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText value="User name" />
+					<p:inputText id="userName" value="#{usersBean.name}" />
+					<p:spacer height="10" />
+					<br />
+
+					<h:outputText value="User surname" />
+					<p:inputText id="userSurname" value="#{usersBean.surname}" />
+					<p:spacer height="10" />
+					<br />
+
+					<h:outputText value="User phone number" />
+					<p:inputText id="userPhoneNumber" value="#{usersBean.phonenumber}" />
+					<p:spacer height="10" />
+					<br />
+
+					<h:outputText value="User email" />
+					<p:inputText id="userEmail" value="#{usersBean.email}" />
+					<p:spacer height="10" />
+					<br />
+
+
+					<h:outputText value="User login" />
+					<p:inputText id="userLogin" value="#{usersBean.login}" />
+					<p:spacer height="10" />
+					<br />
+
+					<h:outputText value="User Password" />
+					<p:inputText id="userPassword" value="#{usersBean.password}" />
+					<p:spacer height="10" />
+					<br />
+				</h:panelGrid>
+
+				<p:commandButton actionListener="#{usersBean.addUser}"
+					value="Add user" icon="ui-icon-circle-plus" ajax="false"
+					styleClass="ui-priority-primary" />
+			</p:dialog>
+			<!-- ADD USER DIALOG -->
+
+
+
+			<!-- USER INFO DIALOG -->
+			<p:dialog header="User info" widgetVar="userInfo" showEffect="fade"
+				hideEffect="blind" resizable="false" icon="ui-icon-search">
+				<p:outputPanel id="userInfo" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty usersBean.selectedUser}"
+						columnClasses="label,value">
+
+						<h:outputText value="Name" />
+						<h:outputText value="#{usersBean.selectedUser.name}" />
+
+						<h:outputText value="Surname" />
+						<h:outputText value="#{usersBean.selectedUser.surname}" />
+
+						<h:outputText value="Password" />
+						<h:outputText value="#{usersBean.selectedUser.password}" />
+
+						<h:outputText value="Email" />
+						<h:outputText value="#{usersBean.selectedUser.email}" />
+
+						<h:outputText value="Phone number" />
+						<h:outputText value="#{usersBean.selectedUser.phoneNumber}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+			<!-- USER INFO DIALOG -->
+
+
+			<!-- EDIT USER DIALOG -->
+			<p:dialog header="User edit" widgetVar="userEdit" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<p:outputPanel id="userEdit" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty usersBean.selectedUser}"
+						columnClasses="label,value">
+
+						<h:outputText value="Name" />
+						<h:inputText value="#{usersBean.selectedUser.name}" />
+
+						<h:outputText value="Surname" />
+						<h:inputText value="#{usersBean.selectedUser.surname}" />
+
+						<h:outputText value="Password" />
+						<h:inputText value="#{usersBean.selectedUser.password}" />
+
+						<h:outputText value="Email" />
+						<h:inputText value="#{usersBean.selectedUser.email}" />
+
+						<h:outputText value="Phone number" />
+						<h:inputText value="#{usersBean.selectedUser.phoneNumber}" />
+					</p:panelGrid>
+					<p:commandButton actionListener="#{usersBean.editUser}"
+						value="Edit User" oncomplete="PF('userEdit').hide()"
+						icon="ui-icon-pencil" ajax="false" />
+				</p:outputPanel>
+			</p:dialog>
+			<!-- EDIT USER DIALOG -->
+
+
+
+			<!--CONTEXT MENU FOR TABLE -->
+			<p:contextMenu for="tbl">
+				<p:menuitem value="View" update="userInfo" icon="ui-icon-search"
+					oncomplete="PF('userInfo').show()" />
+				<p:menuitem value="Edit" update="tbl" icon="ui-icon-pencil"
+					oncomplete="PF('userEdit').show()" />
+
+				<p:menuitem value="Delete" update="tbl" icon="ui-icon-close"
+					actionListener="#{usersBean.deleteUser}" />
+			</p:contextMenu>
+			<!--CONTEXT MENU FOR TABLE -->
+
+			<p:button outcome="test" value="Test"></p:button>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+form {
+	background-image:
+		url('/images/blur_bg_1.jpg.jsf?ln=theme');
+	background-repeat: no-repeat;
+	background-position: right top;
+}
